@@ -19,12 +19,15 @@ package object sonar {
       toSeq
   }
 
-  def source(fs: org.sonar.api.batch.fs.FileSystem): DiscoverScalaFile = testClass => {
+  def source(fs: org.sonar.api.batch.fs.FileSystem, roots: Seq[Path]): DiscoverScalaFile = testClass => {
     import scala.collection.JavaConversions._
     val outerClass = testClass.value.takeWhile(_ != '!')
-    val bestGuessFile = "src/test/scala/" + outerClass.replace('.', '/').+(".scala")
-    val predicate = fs.predicates().hasRelativePath(bestGuessFile)
-    fs.inputFiles(predicate).headOption
+    val bestGuessFile = outerClass.replace('.', '/').+(".scala")
+    val searchLocations = roots.map(_.resolve(bestGuessFile))
+    searchLocations.flatMap { location =>
+      val predicate = fs.predicates().hasRelativePath(location.toString)
+      fs.inputFiles(predicate).headOption
+    }.headOption
   }
 
 

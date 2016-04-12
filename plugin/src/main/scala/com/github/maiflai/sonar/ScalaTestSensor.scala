@@ -25,10 +25,10 @@ class ScalaTestSensor(bob: ResourcePerspectives, fileSystem: FileSystem) extends
 
   override def analyse(module: Project, context: SensorContext): Unit = {
     val settings = new ScalaTestSensorSettings(context)
-    val testReports = discoverXmlFiles(settings.xmlPath)
+    val testReports = settings.xmlRoots.flatMap(discoverXmlFiles)
     log.debug("Discovered {} XML files", testReports.size)
     val testSuiteResults = testReports.map(p => parseTestSuite(XML.loadFile(p.toFile)))
-    val input = source(fileSystem)
+    val input = source(fileSystem, settings.testRoots)
 
     testSuiteResults.foreach { testSuiteResult =>
 
