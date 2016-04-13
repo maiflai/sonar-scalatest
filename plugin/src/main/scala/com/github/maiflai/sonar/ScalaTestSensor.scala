@@ -54,6 +54,7 @@ class ScalaTestSensor(bob: ResourcePerspectives, fileSystem: FileSystem) extends
           context.saveMeasure(inputFile, CoreMetrics.TESTS, testSuiteResult.testCases.size: Double)
           context.saveMeasure(inputFile, CoreMetrics.SKIPPED_TESTS, skipped)
           context.saveMeasure(inputFile, CoreMetrics.TEST_FAILURES, failed)
+          context.saveMeasure(inputFile, CoreMetrics.TEST_ERRORS, 0.0)
           context.saveMeasure(inputFile, CoreMetrics.TEST_EXECUTION_TIME, testSuiteResult.wallTime.toMillis: Double)
       }
     }
