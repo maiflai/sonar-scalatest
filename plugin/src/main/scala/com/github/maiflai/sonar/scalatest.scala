@@ -28,7 +28,7 @@ object scalatest {
 
   val parseTestSuite: Node => TestSuiteResult = p => {
     val stringToDuration: String => Duration = time => {
-      Duration(NumberFormat.getInstance(Locale.ENGLISH).parse(time).doubleValue(), TimeUnit.SECONDS)
+      Duration(time.toDouble, TimeUnit.SECONDS)
     }
     val nodeToTestSuiteResult: Node => (TestClass, Duration) = n => {
       val name = n \@ "name"
