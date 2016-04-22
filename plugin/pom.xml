@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>sonar-scalatest-plugin</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
     <name>Sonar ScalaTest Plugin</name>
 
